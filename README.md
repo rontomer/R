@@ -1,2 +1,2 @@
 # Shiny
-This repository include shiny web applications
+This repository contains shiny web applications
