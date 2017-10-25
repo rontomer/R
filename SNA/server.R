@@ -5,7 +5,7 @@ options(scipen = 50)
 ## function to get names and gender
 getNames <- function(){
     
-    names <- read.csv('names.csv',stringsAsFactors = F)
+    names <- read.csv('/SNA/names.csv',stringsAsFactors = F)
     names <- data.frame(names)
     names$first.name <- iconv(names$first.name,"WINDOWS-1252","UTF-8")
     names <- names %>% group_by(first.name) %>% mutate(ind=row_number()) %>% filter(ind==1) %>% select(-ind) %>% na.omit()
@@ -19,7 +19,7 @@ getNames <- function(){
 getUsers <- function(){
     
     
-    users <- read.csv('users.csv')
+    users <- read.csv('/SNA/users.csv')
     users <- users %>% filter(!name %in% c('','name'))
     users$name <- iconv(users$name,"WINDOWS-1252","UTF-8")
     users$name <- gsub('[[:punct:]]','',users$name)
@@ -83,10 +83,10 @@ users <- getUsers()
 
 
 ## get data
-tweet_tags <- read.csv('tweet_tags.csv')
-tweet_mentions <- read.csv('tweet_mentions.csv')
-tweets <- read.csv('tweets.csv')
-users <- read.csv('users.csv')
+tweet_tags <- read.csv('/SNA/tweet_tags.csv')
+tweet_mentions <- read.csv('/SNA/tweet_mentions.csv')
+tweets <- read.csv('/SNA/tweets.csv')
+users <- read.csv('/SNA/users.csv')
 
 ## join datasets
 tags <- inner_join(tweet_tags,tweet_mentions) %>% 
