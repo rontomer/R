@@ -29,7 +29,6 @@ years <- unique(tags$y)
 dashboardPage(
     dashboardHeader(title = "Social Network Analysis",titleWidth = 350),
     dashboardSidebar(
-         width = 350,
         selectInput('year',label='Choose Year',multiple=F,selectize=T,choices = c('',years),selected = ''),
         uiOutput("month"),
         uiOutput("week"),
