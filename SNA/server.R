@@ -5,7 +5,7 @@ options(scipen = 50)
 ## function to get names and gender
 getNames <- function(){
     
-    names <- read.csv('/SNA/names.csv',stringsAsFactors = F)
+    names <- read.csv('names.csv',stringsAsFactors = F)
     names <- data.frame(names)
     names$first.name <- iconv(names$first.name,"WINDOWS-1252","UTF-8")
     names <- names %>% group_by(first.name) %>% mutate(ind=row_number()) %>% filter(ind==1) %>% select(-ind) %>% na.omit()
@@ -19,7 +19,7 @@ getNames <- function(){
 getUsers <- function(){
     
     
-    users <- read.csv('/SNA/users.csv')
+    users <- read.csv('users.csv')
     users <- users %>% filter(!name %in% c('','name'))
     users$name <- iconv(users$name,"WINDOWS-1252","UTF-8")
     users$name <- gsub('[[:punct:]]','',users$name)
@@ -83,10 +83,10 @@ users <- getUsers()
 
 
 ## get data
-tweet_tags <- read.csv('/SNA/tweet_tags.csv')
-tweet_mentions <- read.csv('/SNA/tweet_mentions.csv')
-tweets <- read.csv('/SNA/tweets.csv')
-users <- read.csv('/SNA/users.csv')
+tweet_tags <- read.csv('tweet_tags.csv')
+tweet_mentions <- read.csv('tweet_mentions.csv')
+tweets <- read.csv('tweets.csv')
+users <- read.csv('users.csv')
 
 ## join datasets
 tags <- inner_join(tweet_tags,tweet_mentions) %>% 
@@ -152,34 +152,7 @@ function(input, output, session) {
                                ,sender_name!=''
                                ) %>% 
                     select(tag,tweet_id,source_user_id,target_user_id,sender_name,recipent_name,text) %>% 
-                    data.frame()
-                
-                # ## set query
-                # query <- paste("
-                #                
-                #                select 
-                #                a.tag
-                #                ,b.*
-                #                ,lower(c.name) sender_name
-                #                ,lower(d.name) recipent_name
-                #                ,tweet_text tweet
-                #                from tweet_tags a
-                #                join tweet_mentions b
-                #                on a.tweet_id=b.tweet_id
-                #                join tweets c
-                #                on b.tweet_id=c.tweet_id
-                #                left join users d
-                #                on b.source_user_id=d.user_id
-                #                where year(c.created_at) in(",paste(input$year,collapse = ','),")
-                #                and month(c.created_at) in(",paste(input$month,collapse = ','),")
-                #                and week(c.created_at) in(",paste(input$week,collapse = ','),")
-                #                and lower(a.tag)='",tags$tag,"'
-                #                and c.name is not null
-                #                and c.name!=''",sep="")
-                # 
-                # ## execute query
-                # data <- dbGetQuery(MySQLConn, query) 
-                
+                    data.frame()                                
             }
             ,silent = T)        
         
