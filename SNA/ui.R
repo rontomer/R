@@ -11,9 +11,9 @@ library(networkD3)
 library(lubridate)
 
 ## get data
-tweet_tags <- read.csv('/SNA/tweet_tags.csv')
-tweet_mentions <- read.csv('/SNA/tweet_mentions.csv')
-tweets <- read.csv('/SNA/tweets.csv')
+tweet_tags <- read.csv('tweet_tags.csv')
+tweet_mentions <- read.csv('tweet_mentions.csv')
+tweets <- read.csv('tweets.csv')
 
 ## join datasets
 tags <- inner_join(tweet_tags,tweet_mentions) %>% 
