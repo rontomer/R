@@ -42,7 +42,14 @@ dashboardPage(
     dashboardBody(
         tags$head(
             tags$style(
-                HTML('/* logo */
+                HTML('
+
+                    .main-header .logo {
+                    font-weight: bold;
+                    font-size: 24px;
+                    }
+
+                    /* logo */
                      .skin-blue .main-header .logo {
                      background-color: black;
                      }
