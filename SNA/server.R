@@ -1,5 +1,5 @@
 
-
+getwd()
 options(scipen = 50)
 
 ## function to get names and gender
@@ -20,7 +20,7 @@ getUsers <- function(){
     
     
     users <- read.csv('users.csv')
-    users <- users %>% filter(!name %in% c('','name'))
+        users <- users %>% filter(!name %in% c('','name'))
     users$name <- iconv(users$name,"WINDOWS-1252","UTF-8")
     users$name <- gsub('[[:punct:]]','',users$name)
     
@@ -152,7 +152,8 @@ function(input, output, session) {
                                ,sender_name!=''
                                ) %>% 
                     select(tag,tweet_id,source_user_id,target_user_id,sender_name,recipent_name,text) %>% 
-                    data.frame()                                
+                    data.frame()
+                
             }
             ,silent = T)        
         
@@ -173,7 +174,7 @@ function(input, output, session) {
         
         user_gender <- getGender(edgeList) %>% select(user_id,gender)
         
-        dt <- inner_join(data(),user_gender,by=c('source_user_id'='user_id')) %>% select(tag,sender_name,gender,tweet) %>% mutate(tweet=paste0(substr(tweet,1,100),'...'))
+        dt <- inner_join(data(),user_gender,by=c('source_user_id'='user_id')) %>% select(tag,sender_name,gender,text) %>% mutate(text=paste0(substr(text,1,100),'...'))
         
         print(tail(dt, input$maxrows))
         options(orig)
@@ -302,7 +303,7 @@ function(input, output, session) {
                                                  NodeID = "nName", # value from the node list (data frame) that contains node description we want to use (e.g., node name)
                                                  Nodesize = "nodeBetweenness",  # value from the node list (data frame) that contains value we want to use for a node size
                                                  Group = "nodeDegree",  # value from the node list (data frame) that contains value we want to use for node color
-                                                 height = 5000, # Size of the plot (vertical)
+                                                 height = 10000, # Size of the plot (vertical)
                                                  width = 5000,  # Size of the plot (horizontal)
                                                  fontSize = 30, # Font size
                                                  linkDistance = networkD3::JS("function(d) { return 50*d.value; }"), # Function to determine distance between any two nodes, uses variables already defined in forceNetwork function (not variables from a data frame)
@@ -319,8 +320,3 @@ function(input, output, session) {
     
     
 }
-
-
-
-
-
